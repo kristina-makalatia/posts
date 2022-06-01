@@ -1,0 +1,41 @@
+#list {
+    display: flex;
+    justify-content: space-between;
+}
+.li-item {
+    display: flex;
+    flex-direction: column;
+}
+.image-item {
+    height: 100px;
+}
+
+/* posts */
+.posts {
+    background-color: darkmagenta;
+    padding: 20px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color:darkblue;
+    color: #fff;
+    display: none;
+}
+.overlay.active {
+    display: block;
+}
+.close {
+    position: absolute;
+    top:30px;
+    right: 30px;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+}
