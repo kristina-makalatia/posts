@@ -11,6 +11,8 @@ let closeOverlay = document.getElementById('closeOverlay');
 let addPost = document.getElementById('add');
 let postOverlay = document.getElementById('postoverlay');
 let form = document.getElementById('form');
+let inputTitle = document.getElementById('titlePost');
+let inputDescription = document.getElementById('postdescr');
 
 function ajax(url,callback) {
     let requist = new XMLHttpRequest();
@@ -57,7 +59,13 @@ function createPost(item) {
     deleteButton.addEventListener('click', function(event) {
         event.stopPropagation();
         let id = event.target.getAttribute('data-id');
-        deletePost(id);
+
+        let url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+        fetch(url, {
+            method: 'DELETE',
+        })
+        .then(() => divWrapper.remove());
+
     });
 
 
@@ -83,17 +91,10 @@ function openOverlay(id) {
     console.log(id);
 }
 
-// პოსტის წაშლის ფუნქცია
-function deletePost(id) {
-    let url = `https://jsonplaceholder.typicode.com/posts/${id}`;
-    fetch(url, {
-        method: 'DELETE',
-    })
-    .then(response => response.json() )
-    .then(data => {
-        console.log(data);
-    })
-}
+// // პოსტის წაშლის ფუნქცია
+// function deletePost(id) {
+   
+// }
 
 
 function overlayFunction(item) {
@@ -118,6 +119,8 @@ closeOverlay.addEventListener('click', function() {
 // პოსტის დამატება
 addPost.addEventListener('click', function() {
     postOverlay.classList.add('active');
+    inputTitle.value = '';
+    inputDescription.value = '';
 })
 
 form.addEventListener('submit', function(event) {
@@ -135,14 +138,16 @@ form.addEventListener('submit', function(event) {
         },
       })
         .then((response) => response.json())
-        .then((json) => {
-            postOverlay.classList.remove('active');
-        });
-
+        .then((post) => afterPostSave(post));
 
     console.log(formData);
    
 })
+
+function afterPostSave(post) {
+    createPost(post);
+    postOverlay.classList.remove('active');
+}
 
 
 
